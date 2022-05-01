@@ -1,0 +1,23 @@
+default 
+un: admin
+pw:123456
+
+
+
+Dipendra
+pw:123456
+
+
+
+creating selection processes is not supported now
+mark 6-19-2020
+
+
+Additional demonstrations added to this projects
+ Several ways to restart the application programatically
+1. without dependencies, use springboot app class
+2. using sprng cloud and actuator 
+3. restart using spring devtools restart method
+These restart functionality are demonstrated via several endpoints in AppRestartController
+
+4.devtools based: restart using trigger file 
