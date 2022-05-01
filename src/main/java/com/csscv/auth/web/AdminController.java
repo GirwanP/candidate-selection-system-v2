@@ -73,7 +73,7 @@ public class AdminController {
 	public String cqualification(Model model) {
 		User curuser = securityService.getLoggedInUser();
 
-		if (userService.isCurrentUserAdmin(curuser)||userService.isCurrentUserRecruiter(curuser)) {
+		if (userService.isCurrentUserAdmin(curuser)) {
 			List<QualificationEntry> qlist = qualificationsSercice.getAllQualifications();
 
 			List<QualificationType> qtlist = qualificationTypeRepository.findAll();
@@ -83,6 +83,18 @@ public class AdminController {
 			model.addAttribute("qtlist", qtlist);
 
 			return "admin/qualification";
+		}else if(userService.isCurrentUserRecruiter(curuser)) {
+			
+			List<QualificationEntry> qlist = qualificationsSercice.getAllQualifications();
+
+			List<QualificationType> qtlist = qualificationTypeRepository.findAll();
+
+			model.addAttribute("username", curuser.getUsername());
+			model.addAttribute("qlist", qlist);
+			model.addAttribute("qtlist", qtlist);
+
+			return "recruiter/qualification";
+			
 		} else {
 			return "redirect:/";
 		}
@@ -210,7 +222,7 @@ public class AdminController {
 	public String cskills(Model model) {
 		User curuser = securityService.getLoggedInUser();
 
-		if (userService.isCurrentUserAdmin(curuser)||userService.isCurrentUserRecruiter(curuser)) {
+		if (userService.isCurrentUserAdmin(curuser)) {
 			
 //			List<QualificationEntry> qlist = qualificationsSercice.getAllQualifications();
 //			List<QualificationType> qtlist = qualificationTypeRepository.findAll();
@@ -225,6 +237,16 @@ public class AdminController {
 			model.addAttribute("qtlist", sllist);
 
 			return "admin/skills";
+		}else if(userService.isCurrentUserRecruiter(curuser)) {
+			List<Skill> slist=skillRepository.findAll();
+			List<SkillLevel	> sllist=skillLevelRepository.findAll();
+			
+			
+			model.addAttribute("username", curuser.getUsername());
+			model.addAttribute("qlist", slist);
+			model.addAttribute("qtlist", sllist);
+
+			return "recruiter/skills";
 		} else {
 			return "redirect:/";
 		}

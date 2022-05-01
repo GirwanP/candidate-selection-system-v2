@@ -10,6 +10,7 @@ import com.csscv.auth.dto.SelectionProcessLinkDto;
 import com.csscv.auth.entities.Candidate;
 import com.csscv.auth.entities.QualificationEntry;
 import com.csscv.auth.entities.QualificationType;
+import com.csscv.auth.entities.Recruiter;
 import com.csscv.auth.entities.Role;
 import com.csscv.auth.entities.SelectionProcess;
 import com.csscv.auth.entities.SelectionProcessLink;
@@ -221,6 +222,40 @@ public class CandidateController {
 	    		return "redirect:/myqualifications";
 	    }
 	    
+	    @PostMapping("/addtomyskills")
+	    public String addtoMyskills(Model model,
+	    		@RequestParam(name="qid") Long qid
+	    		) {
+	    	User curuser=securityService.getLoggedInUser();
+	    	
+	    	skillsService.addUserSkills(qid);
+	    	
+
+	    	return "redirect:/myskills";
+	    }
+	    
+	    /**remove skill from my skills list
+	     * 
+	     * @param model
+	     * @param qid
+	     * @return
+	     */
+	    @IsCandidate(testmessage="only customer allowed")
+	    
+	    @GetMapping("/rmfromskilllist")
+	    public String removefromskl(Model model,
+	    		@RequestParam(name="qid") Long qid
+	    		) {
+	    	
+	    	
+	    	User curuser=securityService.getLoggedInUser();
+	    	
+	    	skillsService.removeUserSkill(qid); 
+	    	
+	    		return "redirect:/myskills";
+	    }
+	    
+	    
 	    
 	    @IsCandidate(testmessage="only customer allowed")
 	    @GetMapping("/cprofile")
@@ -243,6 +278,8 @@ public class CandidateController {
 	    	
 //	    	return "ompaymentdetail";
 	    }
+	    
+	   
 	    
 	   
 }

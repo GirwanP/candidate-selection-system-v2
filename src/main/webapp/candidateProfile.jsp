@@ -155,6 +155,10 @@
 						<div class="col"><a href="myqualifications">My certificates And Qualifications</a></div>
 						
 					</div>
+					<div class="row">
+						<div class="col"><a href="myskills">My Skills</a></div>
+						
+					</div>
 
 
 					

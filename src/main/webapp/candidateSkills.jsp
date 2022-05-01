@@ -32,7 +32,7 @@
 					<div class="card">
 					<div class="card-body">
 							
-					<form action="addtomql" method="post">
+					<form action="addtomyskills" method="post">
 						<div class="form-row">
 							<div class="form-group col-md-8">
 								<label >Add Skill </label> 
@@ -73,43 +73,41 @@
 					<p class="category">Category subtitle</p> --%>
 			</div>
 			<div class="card-body">
-
 				<div class="hscroll">
+				
 				<table class="table table-striped">
 					<thead>
 						<tr>
 							<th scope="col">Id</th>
 							<th scope="col">Name</th>
-							<th scope="col">Type</th>
-							<th scope="col">Field</th>
-							<th scope="col">Duration</th>
+							<th scope="col">Level</th>
 							<th scope="col">Action</th>
+							
 						</tr>
 					</thead>
 					<tbody>
 
 
-						<%-- <c:forEach items="${qlist }" var="q">
+						<c:forEach items="${qlist }" var="q">
 							<tr>
 								<th scope="row">${q.id}</th>
-								<td>${q.name}</td>
-								<td>${q.type.name}</td>
-								<td>${q.fieldOfStdy}</td>
-								<td>${q.length}</td>
-								<td>
-									<a href="rmfrmql?qid=${q.id}">Remove</a>
+								<td>${q.skillName}</td>
+								<td>${q.skillLevel.name}</td>
+								<td> 
+									<a href="rmfromskilllist?qid=${q.id}">Remove Skill</a>
 								</td>
+								
 
 							</tr>
 
 
-						</c:forEach> --%>
+						</c:forEach>
 					</tbody>
 				</table>
-				</div>
 
 
 
+			</div>
 			</div>
 		</div>
 
@@ -118,15 +116,7 @@
 	</div>
 
 
-	<!-- 
-<div class="card  bg-light mb-3" style="max-width: 18rem;">
-  <div class="card-header bg-primary text-dark">Header</div>
-  <div class="card-body ">
-    <h5 class="card-title ">Primary card title</h5>
-    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-  </div>
-</div> -->
-
+	
 
 
 <!-- Large modal -->

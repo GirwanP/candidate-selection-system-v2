@@ -22,5 +22,6 @@ public interface RecruiterService {
 	boolean disableRecruiterUser(long recruiterid);
 	boolean activateRecruiterUser(long recruiterid);
 	Optional<Recruiter> getRecruitereByid(long id);
+	Optional<Recruiter> getRecruitereByUser(long id);
 
 }

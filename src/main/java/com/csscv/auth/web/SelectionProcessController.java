@@ -129,16 +129,20 @@ public class SelectionProcessController {
 			if(userService.isCurrentUserAdmin(curuser)) {
 				 splist= selectionProcessService.getAllSProcessSummaryPageable(0, 75);
 				 model.addAttribute("splist", splist);
+				 
+				 return "admin/selectionProcesslist";
 			}else if(userService.isCurrentUserRecruiter(curuser)){
 				
 				 splist= selectionProcessService.getAllSProcessSummaryPageableRecruiter(0, 75, curuser);
 				model.addAttribute("splist", splist);
+				
+				return "recruiter/selectionProcesslist";
 			}else if(userService.isCurrentUserCandidate(curuser)){
 				splist= selectionProcessService.getAllSProcessSummaryPageable(0, 75);
 				 model.addAttribute("splist", splist);
 				return "selectionProcesslistca";
 			}
-			return "admin/selectionProcesslist";
+			return "redirect:/";
 		} else {
 			return "redirect:/";
 		}

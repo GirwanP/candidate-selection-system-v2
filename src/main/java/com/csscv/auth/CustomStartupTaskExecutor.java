@@ -113,6 +113,7 @@ public class CustomStartupTaskExecutor {
 			User ur=new User();
 			ur.setUsername("recruiter");
 			ur.setPassword(encoder.encode("123456"));
+			ur.setEmail("defaultcomp@gmail.com");
 			
 			Set<Role> rs3=new HashSet<>();
 			rs3.add(r3);

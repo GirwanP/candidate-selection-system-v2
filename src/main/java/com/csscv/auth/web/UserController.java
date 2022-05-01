@@ -6,6 +6,7 @@ import com.csscv.auth.dto.SelectionProcessLinkDto;
 import com.csscv.auth.entities.Candidate;
 import com.csscv.auth.entities.QualificationEntry;
 import com.csscv.auth.entities.QualificationType;
+import com.csscv.auth.entities.Recruiter;
 import com.csscv.auth.entities.Role;
 import com.csscv.auth.entities.SelectionProcess;
 import com.csscv.auth.entities.User;
@@ -15,6 +16,7 @@ import com.csscv.auth.repository.SelectionProcessRepository;
 import com.csscv.auth.service.BugMail;
 import com.csscv.auth.service.CandidateService;
 import com.csscv.auth.service.QualificationsSercice;
+import com.csscv.auth.service.RecruiterService;
 import com.csscv.auth.service.SecurityService;
 import com.csscv.auth.service.SelectionProcessService;
 import com.csscv.auth.service.UserService;
@@ -22,6 +24,7 @@ import com.csscv.auth.validator.UserValidator;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -123,12 +126,6 @@ public class UserController {
     @GetMapping({"/", "/welcome"})
     public String welcome(Model model) {
     	User curuser=securityService.getLoggedInUser();
-    	
-//    	SelectionProcess sprocess= selectionProcessRepository.findByName("Default Selection Process");
-//    	selectionProcessService.getRankList(sprocess);
-    	
-//    	Role arole=roleRepository.findByName("admin");
-//    	Role arole=roleRepository.findByName("admin");
 
     	boolean isadmin=false,iscandidate=false,isrecruiter=false;
     	
@@ -161,8 +158,9 @@ public class UserController {
     		List<SelectionProcessDto> list= selectionProcessService.getAllSProcessSummaryPageableRecruiter(0, 75, curuser);
     		
     		model.addAttribute("username",curuser.getUsername() );
-        	model.addAttribute("slplist", list);
-        	 return "welcomeRecruiter";
+        	
+    		model.addAttribute("slplist", list);
+        	 return "recruiterDashboard";
     	}
     	
        
@@ -260,7 +258,32 @@ public class UserController {
         return "redirect:/welcome";
     } 
     
-    
+    @Autowired
+    RecruiterService recruiterService;
+    @GetMapping("/myprofile")
+    public String rprofile(Model model) {
+    	
+
+
+		User curuser = securityService.getLoggedInUser();
+
+		if ( userService.isCurrentUserRecruiter(curuser)) {
+			model.addAttribute("username", curuser.getUsername());
+			
+			Optional<Recruiter> o = recruiterService.getRecruitereByUser(curuser.getId());
+
+			if (o.isPresent()) {
+				model.addAttribute("candidate", o.get());
+				return "recruiter/recruiterProfile";
+			} else {
+				return "redirect:/recruiters";
+			}
+		} else {
+			return "redirect:/";
+		}
+
+	
+    }
     
     
     @IsCandidate(testmessage="This is test annotation message")

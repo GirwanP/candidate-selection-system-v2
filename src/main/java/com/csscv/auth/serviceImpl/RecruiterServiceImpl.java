@@ -10,6 +10,7 @@ import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.csscv.auth.dto.QualificationLinkDto;
@@ -77,6 +78,10 @@ public class RecruiterServiceImpl implements RecruiterService {
 	
 	@Autowired
 	RoleRepository roleRepository;
+	
+	@Autowired
+	BCryptPasswordEncoder encoder;//=new BCryptPasswordEncoder();
+
 
 	@Override
 	public boolean registerRecruiter(RecruiterDto recruiter) {
@@ -91,7 +96,8 @@ public class RecruiterServiceImpl implements RecruiterService {
 		Recruiter r=new Recruiter();
 				
 		u.setUsername(recruiter.getEmail());
-		u.setPassword(recruiter.getPassword());
+		u.setPassword(encoder.encode("123456"));
+		u.setEmail(recruiter.getEmail());
 		
 		Set<Role> rs=new HashSet<>();
 		Role rol=roleRepository.findByName("recruiter");
@@ -220,6 +226,13 @@ public class RecruiterServiceImpl implements RecruiterService {
 	@Override
 	public Optional<Recruiter> getRecruitereByid(long id) {
 		Optional<Recruiter> c=recruiterRepository.findById(id);
+		
+		return c;
+	}
+	
+	@Override
+	public Optional<Recruiter> getRecruitereByUser(long id) {
+		Optional<Recruiter> c=recruiterRepository.getRecruiterByUserId(id);
 		
 		return c;
 	}
