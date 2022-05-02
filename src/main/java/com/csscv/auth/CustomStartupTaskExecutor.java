@@ -32,6 +32,7 @@ import com.csscv.auth.repository.CandidateRepository;
 import com.csscv.auth.repository.QualificationEntryRepository;
 import com.csscv.auth.repository.QualificationLinkRepository;
 import com.csscv.auth.repository.QualificationTypeRepository;
+import com.csscv.auth.repository.RecruiterRepository;
 import com.csscv.auth.repository.RoleRepository;
 import com.csscv.auth.repository.SelectionProcessLinkRepository;
 import com.csscv.auth.repository.SelectionProcessRepository;
@@ -78,6 +79,9 @@ public class CustomStartupTaskExecutor {
 	@Autowired
 	SelectionProcessLinkRepository selectionProcessLinkRepository;
 	
+	
+	@Autowired 
+	RecruiterRepository recruiterRepository;
 	
 	@PostConstruct
 	public void createDefaultAdmin() {
@@ -131,6 +135,7 @@ public class CustomStartupTaskExecutor {
 			rec.setPanNo("1254622335");
 			rec.setPhoneNo("985054251");
 			rec.setUser(ur);
+			recruiterRepository.save(rec);
 			
 			
 			QualificationType qtype=new QualificationType();

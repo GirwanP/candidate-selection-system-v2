@@ -31,7 +31,6 @@
 					
 					<div class="card">
 								<h4>New Job</h4>
-					*inactive feature
 					<div class="card-body">
 					
 					

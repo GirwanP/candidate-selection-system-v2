@@ -31,7 +31,7 @@
 					
 					<div class="card">
 								<h4>New Job</h4>
-					*inactive feature
+
 					<div class="card-body">
 					
 					
@@ -139,7 +139,13 @@
       <td>${sp.totalCandidateCount}</td>
       <td>${sp.openDate }</td>
       <td>${sp.closingDate }</td>
-      <td>Edit delete details</td>
+      <td>Edit delete 
+      
+      <a class="" href="spdetails?spid${sp.id}">
+                  <i class="fas fa-pencil fa-sm fa-fw mr-2 text-gray-400"></i>
+                 Details
+                </a>
+      </td>
       
     </tr>
        </c:forEach>
