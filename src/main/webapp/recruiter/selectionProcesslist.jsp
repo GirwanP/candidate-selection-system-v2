@@ -141,7 +141,7 @@
       <td>${sp.closingDate }</td>
       <td>Edit delete 
       
-      <a class="" href="spdetails?spid${sp.id}">
+      <a class="" href="spdetails?spid=${sp.id}">
                   <i class="fas fa-pencil fa-sm fa-fw mr-2 text-gray-400"></i>
                  Details
                 </a>
