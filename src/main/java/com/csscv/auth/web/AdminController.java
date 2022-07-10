@@ -184,10 +184,15 @@ public class AdminController {
 
 		User curuser = securityService.getLoggedInUser();
 
-		if (userService.isCurrentUserAdmin(curuser)) {
-			boolean qlist = qualificationsSercice.saveQualificationLinkForSP(qlink);
+		if (userService.isCurrentUserAdmin(curuser)||userService.isCurrentUserRecruiter(curuser)) {
+			
+			
+			if(selectionProcessService.verifyCreater(qlink.getSpid(), curuser)) {
+				boolean qlist = qualificationsSercice.saveQualificationLinkForSP(qlink);
+			}
+			
 
-			return "redirect:qualifications";
+			return "redirect:spdetails?spid="+qlink.getSpid();
 		} else {
 			return "redirect:/";
 		}
@@ -200,8 +205,11 @@ public class AdminController {
 
 		User curuser = securityService.getLoggedInUser();
 
-		if (userService.isCurrentUserAdmin(curuser)) {
+		if (userService.isCurrentUserAdmin(curuser)||userService.isCurrentUserRecruiter(curuser)) {
+			
+			if(selectionProcessService.verifyCreater(spid, curuser)) {
 			qualificationsSercice.removeQualificationLinkForSP(qlinkid);
+			}
 
 			attributes.addAttribute("spid", spid);
 			return "redirect:/spdetails?spid=" + spid;

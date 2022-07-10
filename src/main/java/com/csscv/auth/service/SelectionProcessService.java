@@ -29,4 +29,6 @@ public interface SelectionProcessService {
 
 	boolean createNewSelectionProcessLink(User currentUser, Long spid);
 
+	boolean verifyCreater(Long spid, User user);
+
 }

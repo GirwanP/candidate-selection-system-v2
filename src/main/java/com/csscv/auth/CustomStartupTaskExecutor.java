@@ -129,7 +129,13 @@ public class CustomStartupTaskExecutor {
 			
 			Recruiter rec=new Recruiter();
 			
+			Address a1=new Address();
+			a1.setCountry("Nepal");
+			a1.setMunicipalty("Kathmandu");
+			a1.setState("Bagmati");
+			addressRepository.save(a1);
 			
+			rec.setAddress(a1);
 			rec.setCompanyName("Default Company");
 			rec.setEmail("defaultcomp@gmail.com");
 			rec.setPanNo("1254622335");

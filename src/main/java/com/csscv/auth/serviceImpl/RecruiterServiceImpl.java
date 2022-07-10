@@ -184,9 +184,14 @@ public class RecruiterServiceImpl implements RecruiterService {
 			rd.setId(r.getId());
 			rd.setPhoneNo(r.getPhoneNo());
 			rd.setUsername(r.getUser().getUsername());
-			rd.setMunicipalty(r.getAddress().getMunicipalty());
-			rd.setState(r.getAddress().getState());
-			rd.setCountry(r.getAddress().getCountry());
+			
+			if(r.getAddress()!=null) {
+				rd.setMunicipalty(r.getAddress().getMunicipalty());
+				rd.setState(r.getAddress().getState());
+				rd.setCountry(r.getAddress().getCountry());
+			}
+			
+			
 			rd.setActive(r.isActive());
 			
 			rldto.add(rd);

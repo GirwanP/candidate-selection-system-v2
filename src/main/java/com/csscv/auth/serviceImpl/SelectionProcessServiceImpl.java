@@ -317,4 +317,17 @@ public class SelectionProcessServiceImpl implements SelectionProcessService {
 		return false;
 	}
 	
+	@Override
+	public boolean verifyCreater(Long spid,User user) {
+		
+//		SelectionProcess sp=selectionProcessRepository.findById(spid);
+		
+		Optional<User> u=selectionProcessRepository.getCreaterForspid(spid);
+		
+		if(u.get().equals(user) &&u.isPresent()) {
+			return true;
+		}
+		return false;
+//		return selectionProcessRepository.getCreaterForspid(spid);
+	} 
 }

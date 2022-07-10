@@ -184,7 +184,11 @@ public class SelectionProcessController {
 			model.addAttribute("sll", sll);
 			model.addAttribute("slist", slist);
 
-			return "admin/selectionProcessDetail";
+			if(userService.isCurrentUserAdmin(curuser)) {
+				return "admin/selectionProcessDetail";	
+			}
+			
+			return "recruiter/selectionProcessDetail";
 		} else {
 			return "redirect:/";
 		}
