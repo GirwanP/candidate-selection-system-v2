@@ -193,6 +193,52 @@ public class SelectionProcessServiceImpl implements SelectionProcessService {
 		return spdto;
 	}
 	
+	
+	@Override
+	public List<SelectionProcessDto	> getCandidateNotAppliedSProcessSummaryPageable(int page,int size){
+		
+		PageRequest pg=PageRequest.of(page, size, Sort.by(Sort.Direction.DESC, "id"));
+//		Pageable page=new 
+//		Sort s=new Sort();
+		List<SelectionProcess> splist=selectionProcessRepository.findAll(pg).toList();
+		
+		
+		List<SelectionProcessDto> spdto=splist.stream().map((sp)->{
+			SelectionProcessDto sd=new SelectionProcessDto();
+			sd.setName(sp.getName());
+			sd.setId(sp.getId());
+			sd.setClosingDate(sp.getClosingDate());
+			sd.setOpenDate(sp.getOpenDate());
+			sd.setUniqueId(sp.getUniqueId());
+			
+			long splcount=selectionProcessLinkRepository.getRankListCount(sp);
+			
+			sd.setTotalCandidateCount(splcount);
+			
+			return sd;
+		}).collect(Collectors.toList());
+		
+		
+		Candidate cs=candidateRepository.findByUser(securityService.getLoggedInUser());
+//		List<SelectionProcessLink> list
+		List<Long> spidlist=selectionProcessLinkRepository.getRankListForCandidate(cs)
+				.stream()
+				.map((sp)->{
+					return sp.getSprocess().getId();
+				})
+				.collect(Collectors.toList());
+		
+		spdto.removeIf((spd)->{
+			if(spidlist.contains(spd.getId())) {
+				return true;}
+			return false;
+		});
+		
+		return spdto;
+	}
+	
+//	@Autowired
+//	SelectionProcessService selectionProcessService;
 	@Override
 	public List<SelectionProcessDto	> getAllSProcessSummaryPageableRecruiter(int page,int size,User recruiter){
 		
@@ -237,6 +283,7 @@ public class SelectionProcessServiceImpl implements SelectionProcessService {
 			sd.setClosingDate(sp.getClosingDate());
 			sd.setOpenDate(sp.getOpenDate());
 			sd.setUniqueId(sp.getUniqueId());
+			sd.setCreatorUserId(sp.getCreator().getId());
 			long splcount=selectionProcessLinkRepository.getRankListCount(sp);
 			
 			sd.setTotalCandidateCount(splcount);
@@ -260,27 +307,34 @@ public class SelectionProcessServiceImpl implements SelectionProcessService {
 		
 		List<SelectionProcessLink> splist=c.getSubscribedSelectionProcessess();
 		
-		SelectionProcessLink splink=new SelectionProcessLink();
-		splink.setSprocess(sprocess);
-		splink.setCandidate(c);
-		// points and rank calculation
+		SelectionProcessLink splink=selectionProcessLinkRepository.getSPLForCandidateAndSelectionProcess(c, sprocess);
 		
-		Long score=pointsService.calculatePoints(c.getQualifications(), c.getSkills(), sprocess);
+		if(splink==null) {
+			
+			splink=new SelectionProcessLink();
+			splink.setSprocess(sprocess);
+			splink.setCandidate(c);
+			// points and rank calculation
+			
+			Long score=pointsService.calculatePoints(c.getQualifications(), c.getSkills(), sprocess);
+			
+			splink.setScore(score);
+			
+			splink=selectionProcessLinkRepository.save(splink);
+			splist.add(splink);
+			
+			
+			c.setSubscribedSelectionProcessess(splist);
+			
+			candidateRepository.save(c);
+			
+			splink=selectionProcessLinkRepository.save(splink);
+			
+			updateRankForSelctionProcess(spid);
+			candidateService.updateCandidatePoints(c);
+			return true;
+		}
 		
-		splink.setScore(score);
-		
-		splink=selectionProcessLinkRepository.save(splink);
-		splist.add(splink);
-		
-		
-		c.setSubscribedSelectionProcessess(splist);
-		
-		candidateRepository.save(c);
-		
-		splink=selectionProcessLinkRepository.save(splink);
-		
-		updateRankForSelctionProcess(spid);
-		candidateService.updateCandidatePoints(c);
 		
 		return false;
 	}

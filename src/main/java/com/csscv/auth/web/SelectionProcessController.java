@@ -103,7 +103,13 @@ public class SelectionProcessController {
 			// model.addAttribute("qlist", qlist);
 			model.addAttribute("sprank", sprank);
 
-			return "admin/selectionProcessRank";
+			
+			if(userService.isCurrentUserAdmin(curuser)) {
+				return "admin/selectionProcessRank";
+
+			}else {
+				return "recruiter/selectionProcessRank";
+			}
 		} else {
 			return "redirect:/";
 		}
@@ -138,7 +144,13 @@ public class SelectionProcessController {
 				
 				return "recruiter/selectionProcesslist";
 			}else if(userService.isCurrentUserCandidate(curuser)){
-				splist= selectionProcessService.getAllSProcessSummaryPageable(0, 75);
+				// only view not applied list
+				
+				splist= selectionProcessService.getCandidateNotAppliedSProcessSummaryPageable(0, 75);
+				
+				
+				
+				
 				 model.addAttribute("splist", splist);
 				return "selectionProcesslistca";
 			}
@@ -175,14 +187,19 @@ public class SelectionProcessController {
 			List<SkillLinkDto> sll = skillsService.getSkillLinkForSP(spid);
 			List<Skill> slist = skillsService.getAllSkills();
 			
+			boolean curuserIsTheCreator=spd.get().getCreatorUserId().equals(curuser.getId())?true:false;
+			
 
+			
 			model.addAttribute("username", curuser.getUsername());
 			model.addAttribute("qll", qll);
 			model.addAttribute("sp", spd.get());
 			model.addAttribute("qlist", qlist);
 			
+			
 			model.addAttribute("sll", sll);
 			model.addAttribute("slist", slist);
+			model.addAttribute("curuserIsTheCreator", curuserIsTheCreator);
 
 			if(userService.isCurrentUserAdmin(curuser)) {
 				return "admin/selectionProcessDetail";	

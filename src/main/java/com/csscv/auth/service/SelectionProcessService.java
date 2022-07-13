@@ -31,4 +31,6 @@ public interface SelectionProcessService {
 
 	boolean verifyCreater(Long spid, User user);
 
+	List<SelectionProcessDto> getCandidateNotAppliedSProcessSummaryPageable(int page, int size);
+
 }

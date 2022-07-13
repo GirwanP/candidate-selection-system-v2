@@ -58,50 +58,12 @@
 			data-target=".bd-example-modal-lg">Close</button>
 					</form>
 
-<%-- <form action="addqlink" method="post">
-					<label class="text-dark font-weight-bold">Add new Qualification Link to ${sp.name } </label> 
-						
-						<div class="form-row">
-							<div class="form-group col-md-8">
-								<label >Qualification Entry </label> 
-									
-									<select class="form-control" id="type" placeholder="fsdf" name="qualificationId">
-									<option disabled="disabled" selected="selected">---select qualification type</option>
-									<c:forEach items="${qlist }" var="qt">
-										<option  value="${qt.id }">${qt.name}</option>
-									</c:forEach>
-									</select>
-							</div>
-							
-						</div>
-						<div class="form-row">
-							<div class="form-group col-md-6">
-								<label for="inputEmail4">Points For Qualification</label> <input type="number"
-									class="form-control" id="points" name="points">
-							</div>
-							
-						</div>
-						
-						<input type="hidden" value="${sp.id}" name="spid">
-						<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-						
-						<button type="submit" class="btn btn-primary">Add Qualifications Link</button>
-						
-						<button type="button" class="btn btn-primary  pull-right float-right" data-toggle="modal"
-			data-target=".bd-example-modal-lg">Close</button>
-					</form> --%>
-
-
-
 
 					</div>
 					</div>
 				</div>
 			</div>
 		</div>
-  
-  
-  
   
     <div class="card">
       <div class="card-header bg-primary text-dark">
@@ -139,8 +101,13 @@
       <td>${sp.totalCandidateCount}</td>
       <td>${sp.openDate }</td>
       <td>${sp.closingDate }</td>
-      <td>Edit delete details</td>
+      <td>Edit delete 
       
+      <a class="" href="spdetails?spid=${sp.id}">
+                  <i class="fas fa-pencil fa-sm fa-fw mr-2 text-gray-400"></i>
+                 Details
+                </a>
+      </td> 
       
       
     </tr>
@@ -156,25 +123,6 @@
     
     
   </div>
-
-
-<!-- 
-<div class="card  bg-light mb-3" style="max-width: 18rem;">
-  <div class="card-header bg-primary text-dark">Header</div>
-  <div class="card-body ">
-    <h5 class="card-title ">Primary card title</h5>
-    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-  </div>
-</div> -->
-
-
-
-
-
-
-
-
-
 
 		
 

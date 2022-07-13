@@ -20,7 +20,7 @@
         <!-- <h4 class="card-title ">Regular header</h4>
          -->
          <h1 class="h3 mb-0 text-gray-800"> </h1>
-        <p class="category">--</p>
+        <p class="category">${sp.name}</p>
       </div>
       <div class="card-body">
       <div class="hscroll">
@@ -69,8 +69,61 @@
     <hr/>
      <h1 class="h3 mb-0 text-gray-800">Qualification Links List </h1>
     <h4></h4>
+    
+<c:if test="${curuserIsTheCreator}">
     <button type="button" class="btn btn-primary  pull-right  " data-toggle="modal"
 			data-target=".bd-example-modal-lg" >Add New Qualification Link</button>
+    
+    <div class="modal fade bd-example-modal-lg" tabindex="-1"
+			role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+			<div class="modal-dialog modal-lg" role="document">
+				<div class="modal-content">
+					
+					<div class="card">
+					<div class="card-body">
+					
+					
+							
+					<form action="addqlink" method="post">
+					<label class="text-dark font-weight-bold">Add new Qualification Link to ${sp.name } </label> 
+						
+						<div class="form-row">
+							<div class="form-group col-md-8">
+								<label >Qualification Entry </label> 
+									
+									<select class="form-control" id="type" placeholder="fsdf" name="qualificationId">
+									<option disabled="disabled" selected="selected">---select qualification type</option>
+									<c:forEach items="${qlist }" var="qt">
+										<option  value="${qt.id }">${qt.name}</option>
+									</c:forEach>
+									</select>
+							</div>
+							
+						</div>
+						<div class="form-row">
+							<div class="form-group col-md-6">
+								<label for="inputEmail4">Points For Qualification</label> <input type="number"
+									class="form-control" id="points" name="points">
+							</div>
+							
+						</div>
+						
+						<input type="hidden" value="${sp.id}" name="spid">
+						<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+						
+						<button type="submit" class="btn btn-primary">Add Qualifications Link</button>
+						
+						<button type="button" class="btn btn-primary  pull-right float-right" data-toggle="modal"
+			data-target=".bd-example-modal-lg">Close</button>
+					</form>
+
+					</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		</c:if>
+    
      <div class="card">
      
     <div class="card-body">
@@ -132,8 +185,64 @@
 <hr/>
      <h1 class="h3 mb-0 text-gray-800">Skills Links List </h1>
     <h4></h4>
+    
+    <c:if test="${curuserIsTheCreator}">
     <button type="button" class="btn btn-primary  pull-right  " data-toggle="modal"
 			data-target=".bd-example-modal-lg2" >Add New Skill Link</button>
+			
+	<div class="modal fade bd-example-modal-lg2" tabindex="-1"
+			role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+			<div class="modal-dialog modal-lg" role="document">
+				<div class="modal-content">
+					
+					<div class="card">
+					<div class="card-body">
+					
+					
+							
+					<form action="addslink" method="post">
+					<label class="text-dark font-weight-bold">Add new Skill Link to ${sp.name } </label> 
+						
+						<div class="form-row">
+							<div class="form-group col-md-8">
+								<label >Skill Entry </label> 
+									
+									<select class="form-control" id="type" placeholder="fsdf" name="skillId">
+									<option disabled="disabled" selected="selected">select skill type</option>
+									<c:forEach items="${slist }" var="qt">
+										<option  value="${qt.id }">${qt.skillName}</option>
+									</c:forEach>
+									</select>
+							</div>
+							
+						</div>
+						<div class="form-row">
+							<div class="form-group col-md-6">
+								<label for="inputEmail4">Points For Skill</label> <input type="number"
+									class="form-control" id="points" name="points">
+							</div>
+							
+						</div>
+						
+						<input type="hidden" value="${sp.id}" name="spid">
+						<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+						
+						<button type="submit" class="btn btn-primary">Add Skill Link</button>
+						
+						<button type="button" class="btn btn-primary  pull-right float-right" data-toggle="modal"
+			data-target=".bd-example-modal-lg">Close</button>
+					</form>
+
+					</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		</c:if>		
+			
+			
+			
      <div class="card">
      
     <div class="card-body">
@@ -187,111 +296,7 @@
 </div>
 			</div>
 			</div>
-    
-  
-  
-  
-  
-  
-  <div class="modal fade bd-example-modal-lg" tabindex="-1"
-			role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
-			<div class="modal-dialog modal-lg" role="document">
-				<div class="modal-content">
-					
-					<div class="card">
-					<div class="card-body">
-					
-					
-							
-					<form action="addqlink" method="post">
-					<label class="text-dark font-weight-bold">Add new Qualification Link to ${sp.name } </label> 
-						
-						<div class="form-row">
-							<div class="form-group col-md-8">
-								<label >Qualification Entry </label> 
-									
-									<select class="form-control" id="type" placeholder="fsdf" name="qualificationId">
-									<option disabled="disabled" selected="selected">---select qualification type</option>
-									<c:forEach items="${qlist }" var="qt">
-										<option  value="${qt.id }">${qt.name}</option>
-									</c:forEach>
-									</select>
-							</div>
-							
-						</div>
-						<div class="form-row">
-							<div class="form-group col-md-6">
-								<label for="inputEmail4">Points For Qualification</label> <input type="number"
-									class="form-control" id="points" name="points">
-							</div>
-							
-						</div>
-						
-						<input type="hidden" value="${sp.id}" name="spid">
-						<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-						
-						<button type="submit" class="btn btn-primary">Add Qualifications Link</button>
-						
-						<button type="button" class="btn btn-primary  pull-right float-right" data-toggle="modal"
-			data-target=".bd-example-modal-lg">Close</button>
-					</form>
-
-					</div>
-					</div>
-				</div>
-			</div>
-		</div>
 		
-		
-		
-		<div class="modal fade bd-example-modal-lg2" tabindex="-1"
-			role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
-			<div class="modal-dialog modal-lg" role="document">
-				<div class="modal-content">
-					
-					<div class="card">
-					<div class="card-body">
-					
-					
-							
-					<form action="addslink" method="post">
-					<label class="text-dark font-weight-bold">Add new Skill Link to ${sp.name } </label> 
-						
-						<div class="form-row">
-							<div class="form-group col-md-8">
-								<label >Skill Entry </label> 
-									
-									<select class="form-control" id="type" placeholder="fsdf" name="skillId">
-									<option disabled="disabled" selected="selected">select skill type</option>
-									<c:forEach items="${slist }" var="qt">
-										<option  value="${qt.id }">${qt.skillName}</option>
-									</c:forEach>
-									</select>
-							</div>
-							
-						</div>
-						<div class="form-row">
-							<div class="form-group col-md-6">
-								<label for="inputEmail4">Points For Skill</label> <input type="number"
-									class="form-control" id="points" name="points">
-							</div>
-							
-						</div>
-						
-						<input type="hidden" value="${sp.id}" name="spid">
-						<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-						
-						<button type="submit" class="btn btn-primary">Add Skill Link</button>
-						
-						<button type="button" class="btn btn-primary  pull-right float-right" data-toggle="modal"
-			data-target=".bd-example-modal-lg">Close</button>
-					</form>
-
-					</div>
-					</div>
-				</div>
-			</div>
-		</div>
 <style>
 .hscroll {
   overflow-x: auto; /* Horizontal */
